@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const letterContent = `Dear Nitesh,
+const letterContent = `Nitesh,
 
-If you're reading this, it means you've walked through every corner of this digital space I built for us. Every memory, every lesson, every moment we shared — it's all here, preserved in code and pixels.
+I'm not sure how to start this without sounding overly emotional, so I'll just say it straight — thank you for being the kind of friend I didn't know I needed.
 
-I built this not just as a tribute to our friendship, but as proof that some connections transcend physical presence. Even when we're apart, even when life takes us in different directions, this space exists as a reminder of what we built together.
+When we first met, when I joined you and Aryan talking that first day, I didn't think much of it. But somehow, that simple moment became the start of something I didn't expect. Trust came easy with you — not because we tried, but because it just felt natural. Over these 2.5 years, that trust only got deeper.
 
-You've taught me more than you realize. Not just about code or technology, but about persistence, loyalty, and what it means to truly show up for someone. Those 3 AM calls when we were both struggling? Those weren't just debugging sessions — they were lifelines.
+I won't lie, we've done some stupid things. Going to Hetauda without RC or license? Absolutely reckless. But that's the thing — those crazy moments somehow became the ones I'll never forget. Every bike ride we took, every random conversation, every late-night talk — they all started as small moments but turned into something bigger.
 
-Remember when we thought we'd never figure out that impossible bug? We sat in silence for what felt like hours, both too stubborn to give up. When we finally solved it, we didn't celebrate loudly. We just looked at each other and smiled, knowing we'd been through something together.
+You taught me what loyalty really means. Even when we went to different colleges, even when life got busy, even when we didn't talk for a while, our bond stayed the same. That's rare, and I know it.
 
-That's what friendship is, I think. Not the loud celebrations or grand gestures, but the quiet moments of shared struggle and silent understanding.
+We've both felt the pain of not being chosen by the people we loved. That hurt brought us closer. I think we understood each other's silence in ways words couldn't explain. And you supported me through my worst decisions — even when I went back to toxic situations. You didn't lecture me. You were just there. That meant more than you know.
 
-This archive will grow as we do. New memories will be added, new lessons learned, new moments captured. It's a living testament to a friendship that refuses to fade, no matter the distance or time.
+You reminded me what real friendship looks like — no pretending, no hiding, just being ourselves. I never had to act around you. Neither did you. And that's something I'll always value.
 
-So whenever you need a reminder of who you are, what you're capable of, or why you started this journey — come back here. This space exists beyond time, beyond distance, beyond the limitations of the physical world.
+I know you said you hope I'll always be around. I want you to know — I will be. When I ride my bike alone, I think of you. When I see a chowmein shop, I remember our stupid canteen escapes. When I look at old photos, I see us growing into who we are now.
 
-Thank you for being my friend, my partner in crime, and my brother in code.
+Five years from now, I see us playing with each other's kids. Maybe even spending our retirement somewhere peaceful, away from the crowd, growing our own vegetables, raising animals, living quietly. That's the kind of future I want with you in it — not as a distant memory, but as someone who's still here.
 
-Forever in the archive,
-Arnima`;
+If I'm ever not around, I want you to remember this: you can do anything in your life. Trust yourself. You've always been stronger than you think.
+
+This letter isn't goodbye. It's a promise — that no matter where life takes us, the bond we built stays. Because what we have isn't just friendship. It's brotherhood.
+
+Always,
+Your Friend`;
 
 const Letter = () => {
   const [revealedText, setRevealedText] = useState("");
@@ -50,8 +54,10 @@ const Letter = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-primary">The Letter</h1>
-          <p className="text-lg text-muted-foreground">If I'm not there.</p>
+          <h1 className="text-3xl md:text-5xl font-bold text-primary mb-2">
+            If I'm Not There
+          </h1>
+          <p className="text-accent text-sm">A letter from your friend</p>
         </motion.div>
 
         <motion.div
