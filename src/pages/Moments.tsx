@@ -121,12 +121,12 @@ const Moments = () => {
               onClick={() => setSelectedMoment(moment)}
               className="group cursor-pointer"
             >
-              <div className="relative overflow-hidden rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
-                <div className="aspect-[4/3] overflow-hidden">
+              <div className="relative overflow-hidden rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] h-full flex flex-col">
+                <div className="flex-1 overflow-hidden bg-background/5 flex items-center justify-center min-h-[250px]">
                   <img
                     src={moment.imageUrl}
                     alt={moment.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-4">

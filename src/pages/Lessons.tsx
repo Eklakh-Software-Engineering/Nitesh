@@ -117,19 +117,23 @@ const Lessons = () => {
               animate={{ opacity: 1, rotateY: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               onClick={() => toggleFlip(lesson.id)}
-              className="cursor-pointer perspective-1000"
+              className="cursor-pointer"
               style={{ perspective: "1000px" }}
             >
               <div
-                className={`relative transition-all duration-500 transform-style-3d ${
-                  flipped.includes(lesson.id) ? "rotate-y-180" : ""
-                }`}
-                style={{ transformStyle: "preserve-3d" }}
+                className="relative transition-all duration-700 min-h-[200px]"
+                style={{ 
+                  transformStyle: "preserve-3d",
+                  transform: flipped.includes(lesson.id) ? "rotateY(180deg)" : "rotateY(0deg)"
+                }}
               >
                 {/* Front */}
                 <div
-                  className="absolute inset-0 backface-hidden bg-card border border-border rounded-xl p-6 flex items-center justify-center min-h-[200px] hover:border-primary/50 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)] transition-all duration-300"
-                  style={{ backfaceVisibility: "hidden" }}
+                  className="absolute inset-0 bg-card border border-border rounded-xl p-6 flex items-center justify-center hover:border-primary/50 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)] transition-all duration-300"
+                  style={{ 
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden"
+                  }}
                 >
                   <p className="text-xl font-medium text-center text-muted-foreground">
                     Click to reveal
@@ -138,9 +142,10 @@ const Lessons = () => {
 
                 {/* Back */}
                 <div
-                  className="backface-hidden bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 rounded-xl p-6 flex flex-col justify-between min-h-[200px] shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+                  className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 rounded-xl p-6 flex flex-col justify-between shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
                   style={{
                     backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
                     transform: "rotateY(180deg)",
                   }}
                 >
