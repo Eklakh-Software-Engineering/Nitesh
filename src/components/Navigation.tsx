@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Image, MessageSquare, Mail, BookOpen } from "lucide-react";
+import { Home, Image, MessageSquare, Mail, BookOpen, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Navigation = () => {
@@ -8,6 +8,7 @@ const Navigation = () => {
   const links = [
     { to: "/", icon: Home, label: "Constellation" },
     { to: "/moments", icon: Image, label: "Moments" },
+    { to: "/timeline", icon: Clock, label: "Timeline" },
     { to: "/lessons", icon: MessageSquare, label: "Lessons" },
     { to: "/letter", icon: Mail, label: "Letter" },
     { to: "/capsule", icon: BookOpen, label: "Capsule" },
