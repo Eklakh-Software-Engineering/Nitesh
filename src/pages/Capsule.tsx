@@ -12,10 +12,19 @@ interface Entry {
   timestamp: number;
 }
 
+const defaultEntry: Entry = {
+  id: "default-1",
+  text: "Nitesh,\n\nThis capsule is yours to fill with whatever you want — memories, thoughts, moments that matter. But I wanted to leave the first entry here myself.\n\nThank you for being the kind of friend I didn't think existed. For showing me what loyalty looks like. For every bike ride, every stupid decision we survived, every late-night talk that meant more than words.\n\nYou taught me that friendship isn't about being there only when it's easy — it's about showing up even when it's not.\n\nThis space is ours. Keep adding to it. Let it grow with us.\n\n— Your brother",
+  timestamp: Date.now() - 86400000, // One day ago
+};
+
 const Capsule = () => {
   const [entries, setEntries] = useState<Entry[]>(() => {
     const saved = localStorage.getItem("capsule-entries");
-    return saved ? JSON.parse(saved) : [];
+    const savedEntries = saved ? JSON.parse(saved) : [];
+    // Always include the default entry at the end
+    const hasDefault = savedEntries.some((e: Entry) => e.id === "default-1");
+    return hasDefault ? savedEntries : [...savedEntries, defaultEntry];
   });
   const [isAdding, setIsAdding] = useState(false);
   const [newEntry, setNewEntry] = useState("");
@@ -42,6 +51,10 @@ const Capsule = () => {
   };
 
   const deleteEntry = (id: string) => {
+    if (id === "default-1") {
+      toast.error("This entry is protected and cannot be deleted");
+      return;
+    }
     const updated = entries.filter((e) => e.id !== id);
     setEntries(updated);
     localStorage.setItem("capsule-entries", JSON.stringify(updated));
@@ -150,14 +163,21 @@ const Capsule = () => {
                         {entry.text}
                       </p>
                     </div>
-                    <Button
-                      onClick={() => deleteEntry(entry.id)}
-                      variant="ghost"
-                      size="icon"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                    {entry.id !== "default-1" && (
+                      <Button
+                        onClick={() => deleteEntry(entry.id)}
+                        variant="ghost"
+                        size="icon"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    )}
+                    {entry.id === "default-1" && (
+                      <div className="text-xs text-accent/70 italic">
+                        Protected
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))
