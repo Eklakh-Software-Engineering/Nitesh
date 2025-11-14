@@ -4,7 +4,7 @@ import { Search, Calendar, Star, Camera, Filter, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import bikeTravel from "@/assets/bike-travel-india.jpg";
 import birgunj from "@/assets/birgunj-holi.jpg";
 import chowmein from "@/assets/chowmein-class.jpg";
@@ -482,6 +482,7 @@ const Timeline = () => {
           <Dialog open={true} onOpenChange={() => setSelectedItem(null)}>
             <DialogContent className="max-w-4xl bg-card/95 backdrop-blur-xl border-border">
               <DialogTitle className="sr-only">{selectedItem.title}</DialogTitle>
+              <DialogDescription className="sr-only">{selectedItem.description}</DialogDescription>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
