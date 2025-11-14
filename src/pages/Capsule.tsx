@@ -57,11 +57,14 @@ const Capsule = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-primary">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Memory Capsule
           </h1>
-          <p className="text-lg text-muted-foreground">
-            A space that grows with time. Write your thoughts, they'll stay forever.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
+            A Box of Us — A Time Machine, Not a Storage Box
+          </p>
+          <p className="text-sm text-muted-foreground italic">
+            Every item inside represents a moment you can travel back to someday.
           </p>
         </motion.div>
 
@@ -119,9 +122,14 @@ const Capsule = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-12 text-muted-foreground"
+                className="text-center py-20"
               >
-                <p className="text-lg">No memories yet. Start writing to fill this space.</p>
+                <p className="text-muted-foreground text-lg mb-4">
+                  The capsule is empty. Start adding your memories.
+                </p>
+                <p className="text-sm text-muted-foreground italic">
+                  These entries will grow with time, becoming a living archive of your friendship.
+                </p>
               </motion.div>
             ) : (
               entries.map((entry, index) => (

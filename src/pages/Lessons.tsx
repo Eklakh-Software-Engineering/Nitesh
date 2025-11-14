@@ -14,33 +14,43 @@ interface Lesson {
 const defaultLessons: Lesson[] = [
   {
     id: "1",
-    text: "Sometimes the best code is the code you delete.",
-    author: "Arnima",
+    text: "Trust Doesn't Need Time — It Needs the Right Person",
+    author: "You both trusted each other from the beginning, and time only deepened it. The right people make trust feel natural, not difficult.",
   },
   {
     id: "2",
-    text: "Friendship isn't about being there when it's convenient. It's about being there when it's not.",
-    author: "Nitesh",
+    text: "Loyalty Is Quiet but Powerful",
+    author: "Even when life took you to different colleges, the bond didn't break — it became stronger. Distance doesn't hurt real friendship.",
   },
   {
     id: "3",
-    text: "The bugs we couldn't fix taught us more than the features that worked.",
-    author: "Arnima",
+    text: "Some Pain Makes You Stronger Together",
+    author: "Both of you felt the ache of not being chosen by the person you loved. That shared wound taught empathy, maturity, and emotional depth.",
   },
   {
     id: "4",
-    text: "Success is temporary. Character is permanent.",
-    author: "Nitesh",
+    text: "Stupid Decisions Become Core Memories",
+    author: "The Hetauda trip without RC or license wasn't smart — but it taught you that the craziest moments often become the most unforgettable ones.",
   },
   {
     id: "5",
-    text: "We didn't realize we were making memories. We just knew we were having fun.",
-    author: "Arnima",
+    text: "Real Friendship Has No Pretending",
+    author: "I never pretended aur in your case kabhi nahi. Neither of you ever had to act, hide, or pretend. This showed you both what genuine comfort looks like.",
   },
   {
     id: "6",
-    text: "The best ideas come at 3 AM, but so does our worst code.",
-    author: "Nitesh",
+    text: "Being There Matters More Than Being Right",
+    author: "Thank you for supporting in my wrong decisions even in going back to toxic relationship. Sometimes presence is more important than advice.",
+  },
+  {
+    id: "7",
+    text: "Small Moments Become the Big Ones",
+    author: "Bike rides, late talks, chowmein shops, random walks — you both learned that the smallest hours can become the deepest memories.",
+  },
+  {
+    id: "8",
+    text: "People Can Change Your Definition of Friendship",
+    author: "Once upon a time there was a boy who had no idea of friendship cause all of them tried to betray him just pretending to be friend and after long time he met someone who made him realize the true meaning of it and what we can do for friendship.",
   },
 ];
 
@@ -91,8 +101,10 @@ const Lessons = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-primary">Lessons</h1>
-          <p className="text-lg text-muted-foreground">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            Lessons We Learned
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground">
             Things we learned without realizing.
           </p>
         </motion.div>

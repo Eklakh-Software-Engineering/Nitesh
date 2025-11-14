@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import bikeTravel from "@/assets/bike-travel-india.jpg";
+import birgunj from "@/assets/birgunj-holi.jpg";
+import chowmein from "@/assets/chowmein-class.jpg";
+import farewell from "@/assets/college-farewell.jpg";
+import picnic from "@/assets/college-picnic.jpg";
+import pokhra1 from "@/assets/ghariwarwa-pokhra-1.jpg";
+import pokhra2 from "@/assets/ghariwarwa-pokhra-2.jpg";
+import hetauda from "@/assets/hetauda-adventure.jpg";
+import biryani from "@/assets/mugal-biryani.jpg";
+import birthday from "@/assets/birthday-party.jpg";
 
 interface Moment {
   id: string;
@@ -14,45 +23,73 @@ interface Moment {
 const moments: Moment[] = [
   {
     id: "1",
-    title: "Hackathon Night",
-    description: "When chaos looked like happiness and coffee was our fuel.",
-    imageUrl: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=600&fit=crop",
-    date: "March 2023",
+    title: "Bike Travel to India",
+    description: "When we hit the road with helmets and dreams, capturing the freedom we felt on two wheels.",
+    imageUrl: bikeTravel,
+    date: "2023",
   },
   {
     id: "2",
-    title: "Victory Celebration",
-    description: "The moment we realized we actually did it.",
-    imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop",
-    date: "June 2023",
+    title: "Birgunj Holi Celebration",
+    description: "Colors everywhere, laughter louder than music. A celebration of friendship and chaos.",
+    imageUrl: birgunj,
+    date: "2024",
   },
   {
     id: "3",
-    title: "Late Night Coding",
-    description: "3 AM debugging sessions that turned into life conversations.",
-    imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop",
-    date: "September 2023",
+    title: "Chowmein During Class",
+    description: "The legendary canteen escape. When chowmein mattered more than attendance.",
+    imageUrl: chowmein,
+    date: "2023",
   },
   {
     id: "4",
-    title: "Coffee Break Philosophy",
-    description: "Where we solved the world's problems over terrible coffee.",
-    imageUrl: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&h=600&fit=crop",
-    date: "November 2023",
+    title: "College Farewell",
+    description: "Dressed up, cameras out, pretending we weren't about to miss this phase forever.",
+    imageUrl: farewell,
+    date: "2024",
   },
   {
     id: "5",
-    title: "The Road Trip",
-    description: "Bad music, good company, unforgettable memories.",
-    imageUrl: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop",
-    date: "January 2024",
+    title: "College Picnic",
+    description: "Cold morning, warm company. Just us against the world.",
+    imageUrl: picnic,
+    date: "2023",
   },
   {
     id: "6",
-    title: "Project Launch",
-    description: "When dreams became reality and hard work paid off.",
-    imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&fit=crop",
-    date: "March 2024",
+    title: "Ghariwarwa Pokhra Roaming",
+    description: "Bikes parked, helmets on, exploring like we had all the time in the world.",
+    imageUrl: pokhra1,
+    date: "2024",
+  },
+  {
+    id: "7",
+    title: "Ghariwarwa Pokhra Moments",
+    description: "More than just a place — it became a memory we'd carry forever.",
+    imageUrl: pokhra2,
+    date: "2024",
+  },
+  {
+    id: "8",
+    title: "Hetauda Adventure",
+    description: "The stupidest, most reckless trip — no RC, no license, just pure trust and brotherhood.",
+    imageUrl: hetauda,
+    date: "2023",
+  },
+  {
+    id: "9",
+    title: "Mugal Biryani House",
+    description: "Good food, better company. Where we solved life's problems one plate at a time.",
+    imageUrl: biryani,
+    date: "2024",
+  },
+  {
+    id: "10",
+    title: "Birthday Party at Hotel",
+    description: "Celebrating another year, celebrating us. Dressed sharp, hearts full.",
+    imageUrl: birthday,
+    date: "2024",
   },
 ];
 
