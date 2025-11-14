@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Music, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -10,6 +10,32 @@ const AudioPlayer = () => {
   const [volume, setVolume] = useState(50);
   const [showControls, setShowControls] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const toggleAudio = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+      localStorage.setItem("music-playing", "false");
+      toast.info("Music paused", {
+        description: "Brotherhood vibes on hold"
+      });
+    } else {
+      audio.play().catch((error) => {
+        console.error("Audio play failed:", error);
+        toast.error("Click again to play", {
+          description: "Browser requires user interaction"
+        });
+      });
+      setIsPlaying(true);
+      localStorage.setItem("music-playing", "true");
+      toast.success("Playing your brotherhood track ♫", {
+        description: "Let the memories flow"
+      });
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -35,27 +61,27 @@ const AudioPlayer = () => {
       });
       setIsPlaying(true);
     }
-  }, []);
 
-  const toggleAudio = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
+    // Keyboard shortcut: M key to toggle music
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "m" || e.key === "M") {
+        // Don't trigger if user is typing in an input/textarea
+        if (
+          document.activeElement?.tagName === "INPUT" ||
+          document.activeElement?.tagName === "TEXTAREA"
+        ) {
+          return;
+        }
+        toggleAudio();
+      }
+    };
 
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-      localStorage.setItem("music-playing", "false");
-      toast.info("Music paused");
-    } else {
-      audio.play().catch((error) => {
-        console.error("Audio play failed:", error);
-        toast.error("Click again to play - browser requires user interaction");
-      });
-      setIsPlaying(true);
-      localStorage.setItem("music-playing", "true");
-      toast.success("Playing brotherhood vibes ♫");
-    }
-  };
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [volume, toggleAudio]);
 
   const handleVolumeChange = (value: number[]) => {
     const newVolume = value[0];
@@ -148,6 +174,10 @@ const AudioPlayer = () => {
               <div className="text-xs text-center text-muted-foreground italic">
                 {isPlaying ? "Playing..." : "Paused"}
               </div>
+              
+              <div className="text-[10px] text-center text-muted-foreground/60 pt-1 border-t border-border/50">
+                Press M to toggle
+              </div>
             </div>
           </div>
         )}
@@ -159,8 +189,7 @@ const AudioPlayer = () => {
       )}
 
       <audio ref={audioRef}>
-        {/* Free ambient/lofi music - Replace with your own brotherhood-themed track */}
-        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4c3b8a7a8b.mp3" type="audio/mpeg" />
+        <source src="/music.mp3" type="audio/mpeg" />
       </audio>
     </div>
   );

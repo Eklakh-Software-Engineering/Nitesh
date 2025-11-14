@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import bikeTravel from "@/assets/bike-travel-india.jpg";
 import birgunj from "@/assets/birgunj-holi.jpg";
 import chowmein from "@/assets/chowmein-class.jpg";
@@ -149,6 +149,8 @@ const Moments = () => {
         {selectedMoment && (
           <Dialog open={true} onOpenChange={() => setSelectedMoment(null)}>
             <DialogContent className="max-w-4xl bg-card/95 backdrop-blur-xl border-border">
+              <DialogTitle className="sr-only">{selectedMoment.title}</DialogTitle>
+              <DialogDescription className="sr-only">{selectedMoment.description}</DialogDescription>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}

@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import FloatingParticles from "./components/FloatingParticles";
 import AudioPlayer from "./components/AudioPlayer";
+import WelcomeScreen from "./components/WelcomeScreen";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <WelcomeScreen />
         <FloatingParticles />
         <Navigation />
         <AudioPlayer />
