@@ -8,6 +8,7 @@ import Moments from "./pages/Moments";
 import Lessons from "./pages/Lessons";
 import Letter from "./pages/Letter";
 import Capsule from "./pages/Capsule";
+import Timeline from "./pages/Timeline";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 import FloatingParticles from "./components/FloatingParticles";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/lessons" element={<Lessons />} />
           <Route path="/letter" element={<Letter />} />
           <Route path="/capsule" element={<Capsule />} />
+          <Route path="/timeline" element={<Timeline />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
