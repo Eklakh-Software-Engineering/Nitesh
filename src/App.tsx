@@ -10,10 +10,13 @@ import Letter from "./pages/Letter";
 import Capsule from "./pages/Capsule";
 import Timeline from "./pages/Timeline";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import You from "./pages/You";
 import Navigation from "./components/Navigation";
 import FloatingParticles from "./components/FloatingParticles";
 import AudioPlayer from "./components/AudioPlayer";
 import WelcomeScreen from "./components/WelcomeScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -23,18 +26,29 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <WelcomeScreen />
-        <FloatingParticles />
-        <Navigation />
-        <AudioPlayer />
         <Routes>
-          <Route path="/" element={<Constellation />} />
-          <Route path="/moments" element={<Moments />} />
-          <Route path="/lessons" element={<Lessons />} />
-          <Route path="/letter" element={<Letter />} />
-          <Route path="/capsule" element={<Capsule />} />
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <WelcomeScreen />
+                <FloatingParticles />
+                <Navigation />
+                <AudioPlayer />
+                <Routes>
+                  <Route path="/" element={<You />} />
+                  <Route path="/constellation" element={<Constellation />} />
+                  <Route path="/moments" element={<Moments />} />
+                  <Route path="/lessons" element={<Lessons />} />
+                  <Route path="/letter" element={<Letter />} />
+                  <Route path="/capsule" element={<Capsule />} />
+                  <Route path="/timeline" element={<Timeline />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

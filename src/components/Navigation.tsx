@@ -1,12 +1,26 @@
-import { Link, useLocation } from "react-router-dom";
-import { Home, Image, MessageSquare, Mail, BookOpen, Clock } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Home, Image, MessageSquare, Mail, BookOpen, Clock, Sparkles, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    toast({
+      title: "Logged out",
+      description: "See you soon",
+    });
+    navigate("/login");
+  };
 
   const links = [
-    { to: "/", icon: Home, label: "Constellation" },
+    { to: "/", icon: Sparkles, label: "You" },
+    { to: "/constellation", icon: Home, label: "Constellation" },
     { to: "/moments", icon: Image, label: "Moments" },
     { to: "/timeline", icon: Clock, label: "Timeline" },
     { to: "/lessons", icon: MessageSquare, label: "Lessons" },
@@ -22,26 +36,38 @@ const Navigation = () => {
             The Archive of Us
           </div>
           
-          <div className="flex items-center gap-1">
-            {links.map(({ to, icon: Icon, label }) => {
-              const isActive = location.pathname === to;
-              return (
-                <Link
-                  key={to}
-                  to={to}
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300",
-                    "hover:bg-secondary hover:shadow-lg",
-                    isActive && "bg-secondary/50 shadow-[0_0_15px_hsl(var(--primary)/0.3)]"
-                  )}
-                >
-                  <Icon className={cn("w-4 h-4", isActive && "text-primary")} />
-                  <span className={cn("text-sm hidden sm:inline", isActive && "text-primary font-medium")}>
-                    {label}
-                  </span>
-                </Link>
-              );
-            })}
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              {links.map(({ to, icon: Icon, label }) => {
+                const isActive = location.pathname === to;
+                return (
+                  <Link
+                    key={to}
+                    to={to}
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300",
+                      "hover:bg-secondary hover:shadow-lg",
+                      isActive && "bg-secondary/50 shadow-[0_0_15px_hsl(var(--primary)/0.3)]"
+                    )}
+                  >
+                    <Icon className={cn("w-4 h-4", isActive && "text-primary")} />
+                    <span className={cn("text-sm hidden lg:inline", isActive && "text-primary font-medium")}>
+                      {label}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              className="gap-2 hover:bg-destructive/10 hover:text-destructive"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Logout</span>
+            </Button>
           </div>
         </div>
       </div>
