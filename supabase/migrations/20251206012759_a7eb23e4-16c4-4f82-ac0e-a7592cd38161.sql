@@ -1,0 +1,12 @@
+-- Seed original moments data
+INSERT INTO public.moments (title, description, image_url, moment_date) VALUES
+('Bike Travel to India', 'When we hit the road with helmets and dreams, capturing the freedom we felt on two wheels.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/bike-travel-india.jpg', '2023'),
+('Birgunj Holi Celebration', 'Colors everywhere, laughter louder than music. A celebration of friendship and chaos.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/birgunj-holi.jpg', '2024'),
+('Chowmein During Class', 'The legendary canteen escape. When chowmein mattered more than attendance.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/chowmein-class.jpg', '2023'),
+('College Farewell', 'Dressed up, cameras out, pretending we weren''t about to miss this phase forever.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/college-farewell.jpg', '2024'),
+('College Picnic', 'Cold morning, warm company. Just us against the world.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/college-picnic.jpg', '2023'),
+('Ghariwarwa Pokhra Roaming', 'Bikes parked, helmets on, exploring like we had all the time in the world.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/ghariwarwa-pokhra-1.jpg', '2024'),
+('Ghariwarwa Pokhra Moments', 'More than just a place — it became a memory we''d carry forever.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/ghariwarwa-pokhra-2.jpg', '2024'),
+('Hetauda Adventure', 'The stupidest, most reckless trip — no RC, no license, just pure trust and brotherhood.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/hetauda-adventure.jpg', '2023'),
+('Mugal Biryani House', 'Good food, better company. Where we solved life''s problems one plate at a time.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/mugal-biryani.jpg', '2024'),
+('Birthday Party at Hotel', 'Celebrating another year, celebrating us. Dressed sharp, hearts full.', 'https://zfpjpdttijiugjyriuev.supabase.co/storage/v1/object/public/moments/birthday-party.jpg', '2024');
