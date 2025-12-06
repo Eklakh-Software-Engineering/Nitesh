@@ -111,9 +111,21 @@ const Moments = () => {
   };
 
   const uploadImage = async (file: File): Promise<string | null> => {
+    // Get user ID for ownership-based storage policies
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to upload images.",
+        variant: "destructive",
+      });
+      return null;
+    }
+
     const fileExt = file.name.split(".").pop();
     const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `${fileName}`;
+    // Prefix with user ID for RLS policy compliance
+    const filePath = `${user.id}/${fileName}`;
 
     const { error } = await supabase.storage
       .from("moments")
