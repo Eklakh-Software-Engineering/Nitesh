@@ -61,8 +61,12 @@ const Moments = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Combine default moments with database moments
-  const allMoments = [...defaultMoments, ...dbMoments];
+  // Combine default moments with database moments, sorted by date (newest first)
+  const allMoments = [...defaultMoments, ...dbMoments].sort((a, b) => {
+    const dateA = new Date(a.moment_date).getTime() || 0;
+    const dateB = new Date(b.moment_date).getTime() || 0;
+    return dateB - dateA; // Newest first
+  });
 
   useEffect(() => {
     fetchMoments();
@@ -84,7 +88,7 @@ const Moments = () => {
     const { data, error } = await supabase
       .from("moments")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("moment_date", { ascending: false });
 
     if (error) {
       console.error("Failed to load moments:", error);
