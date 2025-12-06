@@ -1,10 +1,11 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Calendar, Star, Camera, Filter, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { supabase } from "@/integrations/supabase/client";
 import bikeTravel from "@/assets/bike-travel-india.jpg";
 import birgunj from "@/assets/birgunj-holi.jpg";
 import chowmein from "@/assets/chowmein-class.jpg";
@@ -199,14 +200,47 @@ const Timeline = () => {
   const [selectedYear, setSelectedYear] = useState<number | "all">("all");
   const [selectedCategory, setSelectedCategory] = useState<"all" | "memory" | "moment">("all");
   const [selectedItem, setSelectedItem] = useState<TimelineItem | null>(null);
+  const [dbMoments, setDbMoments] = useState<TimelineItem[]>([]);
 
-  const years = useMemo(() => {
-    const uniqueYears = Array.from(new Set(timelineData.map((item) => item.year)));
-    return uniqueYears.sort((a, b) => a - b);
+  useEffect(() => {
+    const fetchDbMoments = async () => {
+      const { data, error } = await supabase
+        .from("moments")
+        .select("*");
+      
+      if (!error && data) {
+        const momentItems: TimelineItem[] = data.map(m => ({
+          id: `db-${m.id}`,
+          title: m.title,
+          description: m.description || "",
+          date: new Date(m.moment_date),
+          year: new Date(m.moment_date).getFullYear(),
+          category: "moment" as const,
+          imageUrl: m.image_url,
+        }));
+        setDbMoments(momentItems);
+      }
+    };
+    fetchDbMoments();
   }, []);
 
+  // Combine static timeline data with db moments
+  const allTimelineData = useMemo(() => {
+    // Filter out duplicates by matching titles
+    const dbTitles = dbMoments.map(m => m.title.toLowerCase());
+    const filteredStatic = timelineData.filter(item => 
+      !dbTitles.includes(item.title.toLowerCase())
+    );
+    return [...filteredStatic, ...dbMoments];
+  }, [dbMoments]);
+
+  const years = useMemo(() => {
+    const uniqueYears = Array.from(new Set(allTimelineData.map((item) => item.year)));
+    return uniqueYears.sort((a, b) => a - b);
+  }, [allTimelineData]);
+
   const filteredData = useMemo(() => {
-    return timelineData
+    return allTimelineData
       .filter((item) => {
         const matchesSearch =
           item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -215,8 +249,8 @@ const Timeline = () => {
         const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
         return matchesSearch && matchesYear && matchesCategory;
       })
-      .sort((a, b) => a.date.getTime() - b.date.getTime());
-  }, [searchQuery, selectedYear, selectedCategory]);
+      .sort((a, b) => a.date.getTime() - b.date.getTime()); // Old to new (oldest first)
+  }, [searchQuery, selectedYear, selectedCategory, allTimelineData]);
 
   const clearFilters = () => {
     setSearchQuery("");
