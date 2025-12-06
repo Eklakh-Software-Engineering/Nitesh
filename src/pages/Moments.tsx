@@ -9,16 +9,43 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Edit, Trash2, X, Upload } from "lucide-react";
 
+// Original local images
+import bikeTravel from "@/assets/bike-travel-india.jpg";
+import birgunj from "@/assets/birgunj-holi.jpg";
+import chowmein from "@/assets/chowmein-class.jpg";
+import farewell from "@/assets/college-farewell.jpg";
+import picnic from "@/assets/college-picnic.jpg";
+import pokhra1 from "@/assets/ghariwarwa-pokhra-1.jpg";
+import pokhra2 from "@/assets/ghariwarwa-pokhra-2.jpg";
+import hetauda from "@/assets/hetauda-adventure.jpg";
+import biryani from "@/assets/mugal-biryani.jpg";
+import birthday from "@/assets/birthday-party.jpg";
+
 interface Moment {
   id: string;
   title: string;
   description: string | null;
   image_url: string;
   moment_date: string;
+  is_default?: boolean;
 }
 
+// Default moments with local images
+const defaultMoments: Moment[] = [
+  { id: "default-1", title: "Bike Travel to India", description: "When we hit the road with helmets and dreams, capturing the freedom we felt on two wheels.", image_url: bikeTravel, moment_date: "2023", is_default: true },
+  { id: "default-2", title: "Birgunj Holi Celebration", description: "Colors everywhere, laughter louder than music. A celebration of friendship and chaos.", image_url: birgunj, moment_date: "2024", is_default: true },
+  { id: "default-3", title: "Chowmein During Class", description: "The legendary canteen escape. When chowmein mattered more than attendance.", image_url: chowmein, moment_date: "2023", is_default: true },
+  { id: "default-4", title: "College Farewell", description: "Dressed up, cameras out, pretending we weren't about to miss this phase forever.", image_url: farewell, moment_date: "2024", is_default: true },
+  { id: "default-5", title: "College Picnic", description: "Cold morning, warm company. Just us against the world.", image_url: picnic, moment_date: "2023", is_default: true },
+  { id: "default-6", title: "Ghariwarwa Pokhra Roaming", description: "Bikes parked, helmets on, exploring like we had all the time in the world.", image_url: pokhra1, moment_date: "2024", is_default: true },
+  { id: "default-7", title: "Ghariwarwa Pokhra Moments", description: "More than just a place — it became a memory we'd carry forever.", image_url: pokhra2, moment_date: "2024", is_default: true },
+  { id: "default-8", title: "Hetauda Adventure", description: "The stupidest, most reckless trip — no RC, no license, just pure trust and brotherhood.", image_url: hetauda, moment_date: "2023", is_default: true },
+  { id: "default-9", title: "Mugal Biryani House", description: "Good food, better company. Where we solved life's problems one plate at a time.", image_url: biryani, moment_date: "2024", is_default: true },
+  { id: "default-10", title: "Birthday Party at Hotel", description: "Celebrating another year, celebrating us. Dressed sharp, hearts full.", image_url: birthday, moment_date: "2024", is_default: true },
+];
+
 const Moments = () => {
-  const [moments, setMoments] = useState<Moment[]>([]);
+  const [dbMoments, setDbMoments] = useState<Moment[]>([]);
   const [selectedMoment, setSelectedMoment] = useState<Moment | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingMoment, setEditingMoment] = useState<Moment | null>(null);
@@ -33,6 +60,9 @@ const Moments = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Combine default moments with database moments
+  const allMoments = [...defaultMoments, ...dbMoments];
 
   useEffect(() => {
     fetchMoments();
@@ -57,13 +87,9 @@ const Moments = () => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to load moments",
-        variant: "destructive",
-      });
+      console.error("Failed to load moments:", error);
     } else {
-      setMoments(data || []);
+      setDbMoments(data || []);
     }
     setIsLoading(false);
   };
@@ -121,6 +147,14 @@ const Moments = () => {
 
   const openEditForm = (moment: Moment, e: React.MouseEvent) => {
     e.stopPropagation();
+    if (moment.is_default) {
+      toast({
+        title: "Cannot edit",
+        description: "Default moments cannot be edited",
+        variant: "destructive",
+      });
+      return;
+    }
     setEditingMoment(moment);
     setTitle(moment.title);
     setDescription(moment.description || "");
@@ -155,7 +189,6 @@ const Moments = () => {
     }
 
     if (editingMoment) {
-      // Update existing moment
       const { error } = await supabase
         .from("moments")
         .update({
@@ -182,7 +215,6 @@ const Moments = () => {
         resetForm();
       }
     } else {
-      // Create new moment
       const { error } = await supabase
         .from("moments")
         .insert({
@@ -212,13 +244,22 @@ const Moments = () => {
     setIsSubmitting(false);
   };
 
-  const handleDelete = async (momentId: string, e: React.MouseEvent) => {
+  const handleDelete = async (moment: Moment, e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    if (moment.is_default) {
+      toast({
+        title: "Cannot delete",
+        description: "Default moments cannot be deleted",
+        variant: "destructive",
+      });
+      return;
+    }
     
     const { error } = await supabase
       .from("moments")
       .delete()
-      .eq("id", momentId);
+      .eq("id", moment.id);
 
     if (error) {
       toast({
@@ -264,63 +305,57 @@ const Moments = () => {
           )}
         </motion.div>
 
-        {moments.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground">No moments yet. Add your first memory!</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {moments.map((moment, index) => (
-              <motion.div
-                key={moment.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                onClick={() => setSelectedMoment(moment)}
-                className="group cursor-pointer"
-              >
-                <div className="relative overflow-hidden rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] h-full flex flex-col">
-                  {isAuthenticated && (
-                    <div className="absolute top-2 right-2 z-10 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button
-                        size="icon"
-                        variant="secondary"
-                        className="h-8 w-8"
-                        onClick={(e) => openEditForm(moment, e)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="destructive"
-                        className="h-8 w-8"
-                        onClick={(e) => handleDelete(moment.id, e)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  )}
-                  <div className="flex-1 overflow-hidden bg-background/5 flex items-center justify-center min-h-[250px]">
-                    <img
-                      src={moment.image_url}
-                      alt={moment.title}
-                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                    />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {allMoments.map((moment, index) => (
+            <motion.div
+              key={moment.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              onClick={() => setSelectedMoment(moment)}
+              className="group cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] h-full flex flex-col">
+                {isAuthenticated && !moment.is_default && (
+                  <div className="absolute top-2 right-2 z-10 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      className="h-8 w-8"
+                      onClick={(e) => openEditForm(moment, e)}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="destructive"
+                      className="h-8 w-8"
+                      onClick={(e) => handleDelete(moment, e)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-1 text-foreground group-hover:text-primary transition-colors">
-                      {moment.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-2">{moment.moment_date}</p>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {moment.description}
-                    </p>
-                  </div>
+                )}
+                <div className="flex-1 overflow-hidden bg-background/5 flex items-center justify-center min-h-[250px]">
+                  <img
+                    src={moment.image_url}
+                    alt={moment.title}
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-1 text-foreground group-hover:text-primary transition-colors">
+                    {moment.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-2">{moment.moment_date}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {moment.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Add/Edit Form Dialog */}
