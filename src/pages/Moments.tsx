@@ -231,6 +231,18 @@ const Moments = () => {
         resetForm();
       }
     } else {
+      // Get user ID for owner-based RLS
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to add moments.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       const { error } = await supabase
         .from("moments")
         .insert({
@@ -238,6 +250,7 @@ const Moments = () => {
           description,
           moment_date: momentDate,
           image_url: imageUrl,
+          user_id: user.id,
         });
 
       if (error) {
